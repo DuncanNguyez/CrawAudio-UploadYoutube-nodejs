@@ -1,0 +1,7 @@
+assets
+node_modules
+.env
+credentials.json
+mongodb
+logs
+files

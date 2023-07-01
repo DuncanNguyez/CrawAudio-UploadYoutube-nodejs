@@ -1,0 +1,32 @@
+{
+    "name": "crawAudio.uploadYoutube",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "commonjs",
+    "author": {
+        "name": "Duncan Nguyen",
+        "email": "duncan.nguyen.18@gmail.com"
+    },
+    "license": "MIT",
+    "scripts": {
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.22.5",
+        "@babel/node": "^7.22.5",
+        "@babel/preset-env": "^7.22.5",
+        "@babel/register": "^7.22.5",
+        "concurrently": "^8.2.0",
+        "cross-env": "^7.0.3",
+        "eslint": "^8.42.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "husky": "^8.0.3",
+        "lint-staged": "13.1.0",
+        "prettier": "^2.8.8"
+    },
+    "lint-staged": {
+        "*.js": "eslint --fix",
+        "*.js,*.md,*.json": "prettier --write"
+    }
+}
