@@ -1,4 +1,5 @@
-const { chromium } = require('playwright-chromium');
+import { chromium } from 'playwright-chromium';
+
 export default async ({ profileDir = `${process.cwd()}/assets/Profiles` }) => {
     const browser = await chromium.launchPersistentContext(profileDir, {
         headless: false,
