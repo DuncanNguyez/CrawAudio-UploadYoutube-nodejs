@@ -5,6 +5,7 @@ const item = new Schema({
     episode: { type: Number, required: true },
     status: Boolean,
     youtubeUrl: String,
+    youtubeId: String,
 });
 
 const storiesSchema = new Schema(
@@ -15,7 +16,10 @@ const storiesSchema = new Schema(
         genres: [String],
         imageUrl: String,
         youtubeUrl: String,
+        youtubeId: String,
         listItem: [item],
+        totalEpisode: Number,
+        review: String,
     },
     { timestamps: true }
 );
