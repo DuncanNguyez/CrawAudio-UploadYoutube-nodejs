@@ -36,6 +36,7 @@
         "dotenv": "^16.3.1",
         "googleapis": "^120.0.0",
         "jsdom": "^22.1.0",
+        "lodash": "^4.17.21",
         "mongoose": "^7.3.1",
         "playwright-chromium": "^1.35.1",
         "videoshow": "^0.1.12"
