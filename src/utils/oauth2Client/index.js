@@ -45,6 +45,8 @@ const getCodeFromBrowser = async (url) => {
     let redirectUrl = '';
     page.on('request', (req) => {
         const locationUrl = req.url();
+
+        // try youtube redirect url
         redirectUrl = locationUrl.match('.*localhost.*') ? locationUrl : '';
     });
     try {
