@@ -19,7 +19,8 @@ const storiesSchema = new Schema(
         youtubeId: String,
         listItem: [item],
         totalEpisode: Number,
-        review: String,
+        description: String,
+        audioDescriptionUrl: String,
     },
     { timestamps: true }
 );
