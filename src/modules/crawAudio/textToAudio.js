@@ -15,7 +15,7 @@ export default async ({ text }) => {
             prosody: '1',
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        data: `text=${encodeURIComponent(text)}`,
+        data: text,
     });
     const audioUrl = res.data.error === 0 ? String(res.data.async) : '';
     return audioUrl;
