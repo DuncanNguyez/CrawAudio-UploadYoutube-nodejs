@@ -1,4 +1,4 @@
-import { config } from 'config';
+import config from 'config';
 import mongoose from 'mongoose';
 
 const { port, name } = config.get('database');
