@@ -6,8 +6,8 @@ export default async ({ pageUrl }) => {
     //     'https://audiotruyenfull.com/the-loai/huyen-huyen/?min_sotap=41&max_sotap=366&min_vote=3&stt=hoan-thanh&ordr=nviews_total-desc';
     const dom = await JSDOM.fromURL(pageUrl);
     const info = dom.window.document.querySelectorAll('.entry-title a');
-    await Promise.all(
-        map([info[0]], async (item) => {
+    return Promise.all(
+        map(info, async (item) => {
             const regex = /\/([^/]+)\/{0,1}$/;
             const singleStoryUrl = item.attributes.href.textContent;
             const infoDetailUrl = item.attributes.href.textContent;
@@ -63,10 +63,19 @@ export default async ({ pageUrl }) => {
             // get Episode info
             const audioContentElement = document.querySelectorAll(
                 '.tad-field-content-audio'
-            )[1];
-            const items = audioContentElement.querySelectorAll(
+            );
+            const list1 = audioContentElement[1]?.querySelectorAll(
                 '.tad-field-content-items'
             );
+            const list0 = audioContentElement[0]?.querySelectorAll(
+                '.tad-field-content-items'
+            );
+            const items =
+                list1 && list1.length > 0
+                    ? list1
+                    : list0 && list0.length > 0
+                    ? list0
+                    : null;
             const episodesInfo = map(items, (item) => {
                 const episode = item.id;
                 const audioUrl = item.querySelector('b').id;
@@ -84,7 +93,7 @@ export default async ({ pageUrl }) => {
                 genres,
                 items: episodesInfo,
             };
-            console.log(result);
+            // console.log(result);
             return result;
         })
     );
