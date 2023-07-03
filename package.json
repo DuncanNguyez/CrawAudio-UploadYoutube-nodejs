@@ -9,7 +9,13 @@
     },
     "license": "MIT",
     "scripts": {
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "db:dev": "mongod --config ./config/mongod.dev.conf",
+        "dev": "node ./index.js",
+        "start:dev": "concurrently \"yarn run db:dev\" \"yarn run dev\"",
+        "db:prod": "mongod --config ./config/mongod.prod.conf",
+        "prod": "cross-env NODE_ENV=production node ./index.js",
+        "start:prod": "concurrently \"yarn run db:prod\" \"yarn run prod\""
     },
     "devDependencies": {
         "@babel/core": "^7.22.5",
