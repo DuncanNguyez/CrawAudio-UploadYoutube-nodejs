@@ -40,6 +40,7 @@
         "axios": "^1.4.0",
         "config": "^3.3.9",
         "dotenv": "^16.3.1",
+        "get-audio-duration": "^4.0.1-beta.0",
         "googleapis": "^120.0.0",
         "jsdom": "^22.1.0",
         "lodash": "^4.17.21",
