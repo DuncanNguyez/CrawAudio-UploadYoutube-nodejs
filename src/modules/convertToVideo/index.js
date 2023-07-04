@@ -3,29 +3,24 @@ import videoshow from 'videoshow';
 
 export default async (imagesPath, audioPath, videoPath) => {
     const videoOptions = {
-        fps: 25,
+        fps: 1,
         loop: await getAudioDurationInSeconds(audioPath), // seconds
-        transition: true,
-        transitionDuration: 1, // seconds
-        videoBitrate: 1024,
-        videoCodec: 'libx264',
+        videoBitrate: 250,
+        videoCodec: 'mpeg4',
         size: '640x?',
         audioBitrate: '128k',
         audioChannels: 2,
         format: 'mp4',
-        pixelFormat: 'yuv420p',
+        pixelFormat: 'nv21',
     };
-    await videoshow(imagesPath, videoOptions)
-        .audio(audioPath)
-        .save(videoPath)
-        .on('start', function (command) {
-            console.log('ffmpeg process started:', command);
-        })
-        .on('error', function (err, stdout, stderr) {
-            console.error('Error:', err);
-            console.error('ffmpeg stderr:', stderr);
-        })
-        .on('end', function (output) {
-            console.error('Video created in:', output);
-        });
+    return new Promise((resolve, reject) => {
+        videoshow(imagesPath, videoOptions)
+            .audio(audioPath)
+            .save(videoPath)
+            .on('start', function (command) {
+                console.log('ffmpeg process started:', command);
+            })
+            .on('end', resolve)
+            .on('error', reject);
+    });
 };
