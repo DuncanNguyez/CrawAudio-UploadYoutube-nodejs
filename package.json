@@ -40,12 +40,12 @@
         "axios": "^1.4.0",
         "config": "^3.3.9",
         "dotenv": "^16.3.1",
+        "fluent-ffmpeg": "^2.1.2",
         "get-audio-duration": "^4.0.1-beta.0",
         "googleapis": "^120.0.0",
         "jsdom": "^22.1.0",
         "lodash": "^4.17.21",
         "mongoose": "^7.3.1",
-        "playwright-chromium": "^1.35.1",
-        "videoshow": "^0.1.12"
+        "playwright-chromium": "^1.35.1"
     }
 }
