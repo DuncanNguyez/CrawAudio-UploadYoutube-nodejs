@@ -1,4 +1,4 @@
-import crawInfoDetails from './crawInfoDetails';
-import textToAudio from './textToAudio';
+import crawInfoDetails from './crawInfoDetails.js';
+import textToAudio from './textToAudio.js';
 
 export { crawInfoDetails, textToAudio };

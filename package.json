@@ -2,7 +2,7 @@
     "name": "crawAudio.uploadYoutube",
     "version": "1.0.0",
     "main": "index.js",
-    "type": "commonjs",
+    "type": "module",
     "author": {
         "name": "Duncan Nguyen",
         "email": "duncan.nguyen.18@gmail.com"
@@ -46,6 +46,7 @@
         "jsdom": "^22.1.0",
         "lodash": "^4.17.21",
         "mongoose": "^7.3.1",
+        "ora": "^6.3.1",
         "playwright-chromium": "^1.35.1"
     }
 }

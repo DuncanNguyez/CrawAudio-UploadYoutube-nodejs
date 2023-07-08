@@ -1,4 +1,4 @@
-import { oauth2Client } from '../../utils';
+import { oauth2Client } from '../../utils/index.js';
 import dotenv from 'dotenv';
 
 dotenv.config();

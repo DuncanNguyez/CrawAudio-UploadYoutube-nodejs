@@ -1,7 +1,7 @@
 import { google } from 'googleapis';
 import fs from 'fs';
 
-import setupBrowser from '../setupBrowser';
+import setupBrowser from '../setupBrowser/index.js';
 
 /**
  *

@@ -1,5 +1,7 @@
-import { map } from 'lodash';
+import lodash from 'lodash';
 import { JSDOM } from 'jsdom';
+
+const { map } = lodash;
 
 export default async ({ pageUrl }) => {
     // const pageUrl =
