@@ -43,6 +43,7 @@
         "fluent-ffmpeg": "^2.1.2",
         "get-audio-duration": "^4.0.1-beta.0",
         "googleapis": "^120.0.0",
+        "gtts": "^0.2.1",
         "jsdom": "^22.1.0",
         "lodash": "^4.17.21",
         "mongoose": "^7.3.1",
