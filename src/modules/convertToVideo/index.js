@@ -1,6 +1,6 @@
 const ffmpeg = require('fluent-ffmpeg');
 
-export default async (imagesPath, audioPath, videoPath) => {
+export default async ({ imagesPath, audioPath, videoPath }) => {
     const command = ffmpeg();
 
     return new Promise((resolve, reject) => {
