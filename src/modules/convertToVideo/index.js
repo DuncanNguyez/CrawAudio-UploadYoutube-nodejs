@@ -1,4 +1,4 @@
-const ffmpeg = require('fluent-ffmpeg');
+import ffmpeg from 'fluent-ffmpeg';
 
 export default async ({ imagesPath, audioPath, videoPath }) => {
     const command = ffmpeg();
