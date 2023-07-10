@@ -21,7 +21,6 @@ const storiesSchema = new Schema(
         listItems: [item],
         totalEpisode: Number,
         descriptions: String,
-        overviewUploaded: Boolean,
         status: {
             type: String,
             enum: ['pending', 'uploading', 'uploaded'],
