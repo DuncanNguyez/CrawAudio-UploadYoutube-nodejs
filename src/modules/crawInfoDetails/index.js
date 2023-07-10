@@ -4,8 +4,6 @@ import { JSDOM } from 'jsdom';
 const { map } = lodash;
 
 export default async ({ pageUrl }) => {
-    // const pageUrl =
-    //     'https://audiotruyenfull.com/the-loai/huyen-huyen/?min_sotap=41&max_sotap=366&min_vote=3&stt=hoan-thanh&ordr=nviews_total-desc';
     const dom = await JSDOM.fromURL(pageUrl);
     const info = dom.window.document.querySelectorAll('.entry-title a');
     return Promise.all(
