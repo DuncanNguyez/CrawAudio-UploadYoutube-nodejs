@@ -18,7 +18,7 @@ const storiesSchema = new Schema(
         imageUrl: String,
         youtubeUrl: String,
         youtubeId: String,
-        listItem: [item],
+        listItems: [item],
         totalEpisode: Number,
         descriptions: String,
         status: {
