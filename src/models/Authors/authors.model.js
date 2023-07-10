@@ -7,6 +7,7 @@ const authorsSchema = new Schema(
         youtubeUrl: String,
         youtubeId: String,
         url: { type: String, require: true },
+        crawled: { type: Boolean, default: false },
     },
     { timestamps: true }
 );

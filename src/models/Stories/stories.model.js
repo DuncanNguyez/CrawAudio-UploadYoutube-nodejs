@@ -21,7 +21,11 @@ const storiesSchema = new Schema(
         listItem: [item],
         totalEpisode: Number,
         descriptions: String,
-        audioDescriptionUrl: String,
+        status: {
+            type: String,
+            enum: ['pending', 'uploading', 'uploaded'],
+            default: 'pending',
+        },
     },
     { timestamps: true }
 );
