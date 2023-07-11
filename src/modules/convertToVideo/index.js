@@ -16,6 +16,7 @@ export default async ({ imagesPath, audioPath, videoPath }) => {
             .outputOptions('-pix_fmt nv21')
             .outputOptions('-c:v mpeg4')
             .outputOptions('-crf 30')
+            .toFormat('mp4')
 
             .output(videoPath)
             .on('error', reject)
