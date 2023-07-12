@@ -1,3 +1,4 @@
+import updateChannelSection from './updateChannelSection.js';
 import getChannelSection from './getChannelSection.js';
 import insertChannelSection from './insertChannelSection.js';
 import insertPlaylist from './insertPlaylist.js';
@@ -11,5 +12,6 @@ export {
     insertPlaylistItem,
     insertChannelSection,
     getChannelSection,
+    updateChannelSection,
     getAuth,
 };
