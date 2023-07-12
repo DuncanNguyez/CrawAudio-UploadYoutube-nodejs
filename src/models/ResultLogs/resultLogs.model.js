@@ -2,9 +2,11 @@ import { Schema, model } from 'mongoose';
 
 const logsSchema = new Schema(
     {
-        status: Boolean,
-        descriptions: String,
-        error: Object,
+        info: {
+            status: Boolean,
+            message: String,
+            metadata: Object,
+        },
         workspace: String,
         durations: String,
     },
