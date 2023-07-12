@@ -11,7 +11,7 @@ export default async ({ auth, title, description, tags }) => {
                 description,
                 tags,
             },
-            status: { privacyStatus: 'private' },
+            status: { privacyStatus: 'public' },
         },
     });
 };
