@@ -12,8 +12,8 @@ export default async () => {
         ora().succeed('All authorPage crawled');
         return;
     }
-
-    const crawlAuthorPage = await handleCrawlInfo(author.url);
+    const url = `${author.url}/?stt=hoan-thanh`;
+    const crawlAuthorPage = await handleCrawlInfo(url);
     if (crawlAuthorPage) {
         await Authors.updateOne({ id: author.id }, { $set: { crawled: true } });
     }
