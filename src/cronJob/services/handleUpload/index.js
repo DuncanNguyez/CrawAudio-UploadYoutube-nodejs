@@ -33,7 +33,7 @@ export default async (stories) => {
         descriptions,
     } = stories;
     console.log('\x1b[33m%s\x1b[0m', `Processing ${name}\n`);
-    const spinner = ora().start();
+    const spinner = ora();
 
     const author = await Authors.findOne({ id: authorId }).lean();
     const auth = await getAuth();
@@ -124,7 +124,11 @@ export default async (stories) => {
             workspace: 'handleUpload',
             durations: getDurations(startTime),
         });
-
+        await Promise.all([
+            clearFolder(audioPath),
+            clearFolder(videoPath),
+            // clearFolder(imagePath),
+        ]);
         return true;
     } catch (error) {
         console.error(error);
@@ -144,11 +148,5 @@ export default async (stories) => {
         spinner.fail('Handle uploading failed!');
 
         return false;
-    } finally {
-        await Promise.all([
-            clearFolder(audioPath),
-            clearFolder(videoPath),
-            // clearFolder(imagePath),
-        ]);
     }
 };

@@ -27,10 +27,14 @@ export default async ({
     spinner.succeed(`Downloaded image: ${itemName}`);
 
     spinner.start(`Downloading audio: ${itemName}`);
-    const saveAudio = await getFileFromUrl({
-        filePath: audioPath,
-        url: item.audioUrl,
-    });
+    const audioExisted = fs.existsSync(audioPath);
+
+    const saveAudio = audioExisted
+        ? audioExisted
+        : await getFileFromUrl({
+              filePath: audioPath,
+              url: item.audioUrl,
+          });
     if (!saveAudio) {
         spinner.fail('Save audio failed!');
         throw Error('Save audio failed!');
@@ -38,10 +42,12 @@ export default async ({
     spinner.succeed(`Downloaded audio: ${itemName}`);
 
     spinner.start(`Converting to video`);
-    await convertToVideo({
-        imagesPath: imagePath,
-        audioPath,
-        videoPath,
-    });
+    const videoExisted = fs.existsSync(videoPath);
+    !videoExisted &&
+        (await convertToVideo({
+            imagesPath: imagePath,
+            audioPath,
+            videoPath,
+        }));
     spinner.succeed(`Video ${itemName}.mp4 converted`);
 };
