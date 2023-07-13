@@ -106,8 +106,11 @@ export default async (stories) => {
             {
                 $set: {
                     'listItems.$.status': true,
+                    'listItems.$.youtubeId': videoId,
+                    'listItems.$.youtubeUrl': `https://youtu.be/${videoId}`,
                     status: 'uploading',
                     youtubeId: playlistId,
+                    youtubeUrl: `https://www.youtube.com/playlist?list=${playlistId}`,
                 },
             }
         );
