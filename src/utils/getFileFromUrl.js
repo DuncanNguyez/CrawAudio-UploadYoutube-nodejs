@@ -14,8 +14,6 @@ export default async ({ filePath, url }) => {
             file.on('finish', resolve);
             file.on('error', reject);
         });
-        console.log('Saved file');
-        console.log(filePath);
         return true;
     } catch (error) {
         console.error(error);

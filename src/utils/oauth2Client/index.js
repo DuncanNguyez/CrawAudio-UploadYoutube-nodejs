@@ -36,7 +36,7 @@ export default async ({
             access_type: 'offline',
             scope: scopes,
         });
-        console.log({ authUrl });
+        // console.log({ authUrl });
         const code = await getCodeFromBrowser({ url: authUrl, redirectUrl });
         console.log({ code });
         const { tokens: credentials } = await oauth2Client.getToken(code);
