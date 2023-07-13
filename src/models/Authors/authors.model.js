@@ -6,6 +6,7 @@ const authorsSchema = new Schema(
         name: String,
         youtubeUrl: { type: String, default: null },
         youtubeId: { type: String, default: null },
+        playlistIds: [String],
         url: { type: String, require: true },
         crawled: { type: Boolean, default: false },
     },
