@@ -4,8 +4,8 @@ const authorsSchema = new Schema(
     {
         id: { type: String, required: true },
         name: String,
-        youtubeUrl: String,
-        youtubeId: String,
+        youtubeUrl: { type: String, default: null },
+        youtubeId: { type: String, default: null },
         url: { type: String, require: true },
         crawled: { type: Boolean, default: false },
     },

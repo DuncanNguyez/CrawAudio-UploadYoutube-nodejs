@@ -4,8 +4,8 @@ const item = new Schema({
     audioUrl: { type: String, required: true },
     episode: { type: Number, required: true },
     status: { type: Boolean, default: false },
-    youtubeUrl: String,
-    youtubeId: String,
+    youtubeUrl: { type: String, default: null },
+    youtubeId: { type: String, default: null },
 });
 
 const storiesSchema = new Schema(
@@ -16,8 +16,8 @@ const storiesSchema = new Schema(
         genres: [String],
         url: String,
         imageUrl: String,
-        youtubeUrl: String,
-        youtubeId: String,
+        youtubeUrl: { type: String, default: null },
+        youtubeId: { type: String, default: null },
         listItems: [item],
         totalEpisode: Number,
         descriptions: String,
