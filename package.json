@@ -15,7 +15,9 @@
         "start:dev": "concurrently \"yarn run db:dev\" \"yarn run dev\"",
         "db:prod": "mongod --config ./config/mongod.prod.conf",
         "prod": "cross-env NODE_ENV=production node ./index.js",
-        "start:prod": "concurrently \"yarn run db:prod\" \"yarn run prod\""
+        "start:prod": "concurrently \"yarn run db:prod\" \"yarn run prod\"",
+        "crawl": "concurrently \"yarn run db:prod\" \" node ./scripts/crawling.js\"",
+        "upload": "concurrently \"yarn run db:prod\" \" node ./scripts/uploading.js\""
     },
     "devDependencies": {
         "@babel/core": "^7.22.5",
@@ -39,6 +41,7 @@
     "dependencies": {
         "axios": "^1.4.0",
         "config": "^3.3.9",
+        "cron": "^2.3.1",
         "dotenv": "^16.3.1",
         "fluent-ffmpeg": "^2.1.2",
         "get-audio-duration": "^4.0.1-beta.0",
