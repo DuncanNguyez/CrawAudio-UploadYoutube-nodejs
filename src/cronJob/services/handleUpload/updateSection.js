@@ -1,11 +1,13 @@
 import ora from 'ora';
+import lodash from 'lodash';
 
 import {
     getChannelSection,
     insertChannelSection,
     updateChannelSection,
 } from '../../../modules/uploadOnYoutube/index.js';
-import { includes } from 'lodash';
+
+const { includes } = lodash;
 
 export default async ({ author, playlistId, auth, storyName }) => {
     const spinner = ora();
