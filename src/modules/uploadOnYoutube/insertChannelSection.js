@@ -10,6 +10,7 @@ export default async ({ auth, playlistIds, author }) => {
                 type: 'multiplePlaylists',
                 style: 'horizontalRow',
                 title: author,
+                position: 0,
             },
 
             contentDetails: { playlists: playlistIds },

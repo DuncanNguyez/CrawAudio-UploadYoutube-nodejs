@@ -95,11 +95,15 @@ export default async (stories) => {
             author,
             playlistId,
             auth,
+            storyName: name,
         });
 
         await Authors.updateOne(
             { id: author.id },
-            { $set: { youtubeId: channelSectionId } }
+            {
+                $set: { youtubeId: channelSectionId },
+                $addToSet: { playlistIds: playlistId },
+            }
         );
         await Stories.updateOne(
             { id, 'listItems.episode': item.episode },

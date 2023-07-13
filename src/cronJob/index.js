@@ -1,5 +1,5 @@
-import crawInfoDetails from '../modules/crawInfoDetails.js';
+import crawInfoPageCron from './crawInfoPage.cron.js';
 import crawInfoDefaultCron from './crawInfoDefault.cron.js';
 import uploadToYoutubeCron from './uploadToYoutube.cron.js';
 
-export { crawInfoDefaultCron, crawInfoDetails, uploadToYoutubeCron };
+export { crawInfoDefaultCron, crawInfoPageCron, uploadToYoutubeCron };

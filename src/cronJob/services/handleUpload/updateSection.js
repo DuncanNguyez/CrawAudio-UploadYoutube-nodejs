@@ -5,8 +5,9 @@ import {
     insertChannelSection,
     updateChannelSection,
 } from '../../../modules/uploadOnYoutube/index.js';
+import { includes } from 'lodash';
 
-export default async ({ author, playlistId, auth }) => {
+export default async ({ author, playlistId, auth, storyName }) => {
     const spinner = ora();
     if (!author.youtubeId) {
         spinner.start('Create channel section');
@@ -22,11 +23,17 @@ export default async ({ author, playlistId, auth }) => {
         return channelSectionId;
     } else {
         spinner.start('Update channel section');
+        if (includes(author.playlistIds, playlistId)) {
+            spinner.succeed(
+                `Playlist ${storyName} already in the ${author.name} channel section`
+            );
+            return author.youtubeId;
+        }
         const {
             data: {
                 items: [
                     {
-                        contentDetails: { playlistIds },
+                        contentDetails: { playlists: playlistIds },
                     },
                 ],
             },
