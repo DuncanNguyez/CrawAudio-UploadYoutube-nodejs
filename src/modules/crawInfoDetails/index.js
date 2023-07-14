@@ -16,16 +16,20 @@ export default async ({ pageUrl }) => {
             const document = domInfo.window.document;
             const title = document.querySelector('.entry-title')?.textContent;
 
-            const infoElement = document.querySelector('.info-truyenth');
+            const infoElement = document.querySelector('.infotruyen');
 
             const thumbnail = infoElement
                 .querySelector('img')
                 .getAttribute('data-src');
 
             const descriptionsStory =
-                infoElement.querySelector('.contentth')?.textContent;
-
-            const infoList = infoElement.querySelector('.info-list').innerHTML;
+                document
+                    .querySelector('.infotruyen > p')
+                    ?.textContent.replace('Xem thêm', '') +
+                    document.querySelector('.infotruyen > div.read_div')
+                        ?.textContent || '';
+            const infoList =
+                document.querySelector('.infotruyen > span').innerHTML;
 
             // get author info
             const stringTagAuthor = infoList
@@ -56,10 +60,6 @@ export default async ({ pageUrl }) => {
                 return { name: genresName, url, id: matchedGenreId?.[1] };
             });
 
-            const totalEpisode = infoList
-                .match('Số tập.*Trạng thái')?.[0]
-                .match('[0-9]+')?.[0];
-
             // get Episode info
             const audioContentElement = document.querySelectorAll(
                 '.tad-field-content-audio'
@@ -82,6 +82,8 @@ export default async ({ pageUrl }) => {
                 return { episode, audioUrl };
             });
 
+            const totalEpisode = items.length;
+
             const result = {
                 id: storyId,
                 url: singleStoryUrl,
@@ -94,6 +96,7 @@ export default async ({ pageUrl }) => {
                 items: episodesInfo,
             };
             // console.log(result);
+            // process.exit();
             return result;
         })
     );
