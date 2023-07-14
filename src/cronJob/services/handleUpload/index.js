@@ -32,7 +32,7 @@ export default async (stories) => {
         listItems,
         descriptions,
     } = stories;
-    console.log('\x1b[33m%s\x1b[0m', `Processing ${name}\n`);
+    console.log('\x1b[33m%s\x1b[0m', `\nProcessing ${name}\n`);
     const spinner = ora();
 
     const author = await Authors.findOne({ id: authorId }).lean();

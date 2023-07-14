@@ -22,7 +22,7 @@ export default async ({
     if (fs.existsSync(credentialsPath)) {
         const credentialsData = fs.readFileSync(credentialsPath);
         const credentials = JSON.parse(credentialsData);
-        console.log({ credentials });
+        // console.log({ credentials });
         oauth2Client.setCredentials(credentials);
 
         // Access token has expired, refresh it
@@ -41,7 +41,7 @@ export default async ({
         console.log({ code });
         const { tokens: credentials } = await oauth2Client.getToken(code);
         oauth2Client.setCredentials(credentials);
-        console.log({ credentials });
+        // console.log({ credentials });
         fs.writeFileSync(credentialsPath, JSON.stringify(credentials));
     }
     return oauth2Client;
