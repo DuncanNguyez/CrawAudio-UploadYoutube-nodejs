@@ -16,8 +16,8 @@
         "db:prod": "mongod --config ./config/mongod.prod.conf",
         "prod": "cross-env NODE_ENV=production node ./index.js",
         "start:prod": "concurrently \"yarn run db:prod\" \"yarn run prod\"",
-        "crawl": "concurrently \"yarn run db:prod\" \" node ./scripts/crawling.js\"",
-        "upload": "concurrently \"yarn run db:prod\" \" node ./scripts/uploading.js\""
+        "crawl": "cross-env NODE_ENV=production concurrently \"yarn run db:prod\" \" node ./scripts/crawling.js\"",
+        "upload": "cross-env NODE_ENV=production concurrently \"yarn run db:prod\" \" node ./scripts/uploading.js\""
     },
     "devDependencies": {
         "@babel/core": "^7.22.5",
