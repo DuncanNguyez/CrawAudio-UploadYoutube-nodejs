@@ -15,6 +15,7 @@ export default async ({
     totalEpisode,
     url,
 }) =>
+    !(await Stories.findOne({ id }).lean()) &&
     Stories.updateOne(
         { id },
         {

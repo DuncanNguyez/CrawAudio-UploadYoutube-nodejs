@@ -6,13 +6,16 @@ const { map } = lodash;
 
 export default async (genres) =>
     Promise.all(
-        map(genres, async (genre) =>
-            Genres.updateOne(
-                { id: genre.id },
-                {
-                    $set: genre,
-                },
-                { upsert: true }
-            )
+        map(
+            genres,
+            async (genre) =>
+                !(await Genres.findOne({ id: genre.id })) &&
+                Genres.updateOne(
+                    { id: genre.id },
+                    {
+                        $set: genre,
+                    },
+                    { upsert: true }
+                )
         )
     );
