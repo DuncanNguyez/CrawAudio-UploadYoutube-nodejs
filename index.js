@@ -20,7 +20,15 @@ const crawInfoDefaultJob = new CronJob(
 );
 crawInfoDefaultJob.start();
 
-const crawInfoPageJob = new CronJob('0 0 * * * *', crawInfoPageCron);
+const crawInfoPageJob = new CronJob(
+    '0 0 * * * *',
+    crawInfoPageCron,
+    null,
+    false,
+    null,
+    null,
+    true
+);
 crawInfoPageJob.start();
 
 const uploadToYoutubeJob = new CronJob(
