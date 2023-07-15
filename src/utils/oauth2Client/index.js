@@ -1,7 +1,11 @@
 import { google } from 'googleapis';
 import fs from 'fs';
+import dotenv from 'dotenv';
 
 import setupBrowser from '../setupBrowser/index.js';
+
+dotenv.config();
+const { EMAIL: email, PASSWORD: password } = process.env;
 
 /**
  *
@@ -67,22 +71,31 @@ const getCodeFromBrowser = async ({ url, redirectUrl }) => {
     // login gg account
     try {
         await page.goto(url, { waitUntil: 'load' });
-        const identifier = await page.$(
-            'div[data-identifier="giottan123@gmail.com"]'
-        );
+
+        const identifier = await page.$(`div[data-identifier="${email}"]`);
+
         if (identifier) {
             await identifier.click();
-
-            await page.waitForURL(/.*warning.*/);
-            const buttons = await page.$$('button[jscontroller][jsname]');
-            const tieptuc = buttons.at(2);
-            await tieptuc.click();
-
-            await page.waitForURL(/.*consentsummary.*/);
-            const input = await page.$('input');
-            await input.click();
-            await (await page.$$('button')).at(2).click();
+        } else {
+            await page.fill('#identifierId', email);
+            const next = await page.$$('button');
+            await next.at(3).click();
+            await page.fill('input[type="password"]', password);
+            const login = await page.$$('button');
+            await login.at(2).click();
+            const next2 = await page.$$('button');
+            await next2.at(0).click();
         }
+
+        await page.waitForURL(/.*warning.*/);
+        const buttons = await page.$$('button[jscontroller][jsname]');
+        const tieptuc = buttons.at(2);
+        await tieptuc.click();
+
+        await page.waitForURL(/.*consentsummary.*/);
+        const input = await page.$('input');
+        await input.click();
+        await (await page.$$('button')).at(2).click();
     } catch (error) {
         console.error('getCodeFromBrowser Error');
     }
