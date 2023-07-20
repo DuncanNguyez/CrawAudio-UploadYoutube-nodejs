@@ -141,7 +141,7 @@ export default async (stories) => {
         console.error(error);
         await ResultLogs.create({
             info: {
-                status: true,
+                status: false,
                 message: error.message,
                 metadata: {
                     story: name,
