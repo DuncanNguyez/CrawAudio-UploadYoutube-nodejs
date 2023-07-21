@@ -1,8 +1,8 @@
 import { google } from 'googleapis';
-import fs from 'fs';
 import dotenv from 'dotenv';
 
-import setupBrowser from '../setupBrowser/index.js';
+import { Credentials } from '../../models/index.js';
+import { setupBrowser, transformVariableType } from '../../utils/index.js';
 
 dotenv.config();
 const { EMAIL: email, PASSWORD: password } = process.env;
@@ -10,30 +10,31 @@ const { EMAIL: email, PASSWORD: password } = process.env;
 /**
  *
  */
-export default async ({
-    clientId,
-    clientSecret,
-    redirectUrl,
-    scopes,
-    credentialsPath,
-}) => {
+export default async ({ screenApp, scopes }) => {
+    const { projectId, clientId, clientSecret, redirectUrl } = screenApp;
+
     const oauth2Client = new google.auth.OAuth2(
         clientId,
         clientSecret,
         redirectUrl
     );
+    const credentials = await Credentials.findOne({ projectId }).lean();
 
-    if (fs.existsSync(credentialsPath)) {
-        const credentialsData = fs.readFileSync(credentialsPath);
-        const credentials = JSON.parse(credentialsData);
-        // console.log({ credentials });
-        oauth2Client.setCredentials(credentials);
+    if (credentials) {
+        oauth2Client.setCredentials(
+            transformVariableType(credentials, 'sneck_case')
+        );
 
         // Access token has expired, refresh it
-        if (credentials.expiry_date < Date.now()) {
+        if (credentials.expiryDate < Date.now()) {
             await oauth2Client.refreshAccessToken();
             const newCredentials = oauth2Client.credentials;
-            fs.writeFileSync(credentialsPath, JSON.stringify(newCredentials));
+            await Credentials.findOneAndUpdate(
+                { projectId },
+                {
+                    set: transformVariableType(newCredentials, 'cameCase'),
+                }
+            );
         }
     } else {
         const authUrl = oauth2Client.generateAuthUrl({
@@ -46,7 +47,14 @@ export default async ({
         const { tokens: credentials } = await oauth2Client.getToken(code);
         oauth2Client.setCredentials(credentials);
         // console.log({ credentials });
-        fs.writeFileSync(credentialsPath, JSON.stringify(credentials));
+        console.log(transformVariableType(credentials, 'cameCase'));
+        await Credentials.findOneAndUpdate(
+            { projectId },
+            {
+                $set: transformVariableType(credentials, 'cameCase'),
+            },
+            { upsert: true }
+        );
     }
     return oauth2Client;
 };

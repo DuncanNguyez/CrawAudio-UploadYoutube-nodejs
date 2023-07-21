@@ -1,7 +1,6 @@
 import lodash from 'lodash';
 import ora from 'ora';
 
-import { getAuth } from '../../../modules/uploadOnYoutube/index.js';
 import { Stories, Authors, ResultLogs } from '../../../models/index.js';
 import prepareVideo from './prepareVideo.js';
 import uploadVideo from './uploadVideo.js';
@@ -14,13 +13,15 @@ const { sortBy, find } = lodash;
 
 /**
  * @param {stories} stories
+ * @param {OAuth2Client} auth
+ * @param {Screens.projectId} projectId
  * @return {Promise<Boolean>} status handle uploading
  * @description
  * - uploading video into youtube
  * - push the video into playlist
  * - push the playlist into channel section
  */
-export default async (stories) => {
+export default async (stories, auth, projectId) => {
     const startTime = process.hrtime();
     const {
         id,
@@ -36,7 +37,6 @@ export default async (stories) => {
     const spinner = ora();
 
     const author = await Authors.findOne({ id: authorId }).lean();
-    const auth = await getAuth();
     const listItemsSorted = sortBy(listItems, 'episode');
     const item = find(listItemsSorted, (i) => !i.status);
 
@@ -89,6 +89,7 @@ export default async (stories) => {
             descriptions,
             videoId,
             title: playlistTitle,
+            position: item.episode - 1,
         });
 
         const channelSectionId = await updateSection({
@@ -126,6 +127,7 @@ export default async (stories) => {
                     story: name,
                     episode: item.episode,
                     author: author.name,
+                    projectId,
                 },
             },
             workspace: 'handleUpload',
@@ -147,6 +149,7 @@ export default async (stories) => {
                     story: name,
                     episode: item.episode,
                     author: author.name,
+                    projectId,
                 },
             },
             workspace: 'handleUpload',
