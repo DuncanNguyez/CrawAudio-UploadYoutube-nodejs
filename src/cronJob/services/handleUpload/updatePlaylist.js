@@ -12,6 +12,7 @@ export default async ({
     descriptions,
     videoId,
     title,
+    position,
 }) => {
     const spinner = ora();
     spinner.start('Updating playlist');
@@ -29,6 +30,7 @@ export default async ({
         auth,
         playlistId,
         videoId,
+        position,
     });
     spinner.succeed(`Updated ${title} playlist`);
     return playlistId;

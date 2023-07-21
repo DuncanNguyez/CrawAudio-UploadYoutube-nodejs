@@ -1,6 +1,6 @@
 import { google } from 'googleapis';
 
-export default async ({ auth, playlistId, videoId }) => {
+export default async ({ auth, playlistId, videoId, position }) => {
     const youtube = google.youtube('v3');
     return youtube.playlistItems.insert({
         auth,
@@ -12,6 +12,7 @@ export default async ({ auth, playlistId, videoId }) => {
                     videoId,
                     kind: 'youtube#video',
                 },
+                position,
             },
         },
     });
