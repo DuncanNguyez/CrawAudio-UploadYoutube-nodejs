@@ -6,6 +6,7 @@ const screenSchema = new Schema(
         projectId: String,
         clientSecret: String,
         redirectUrl: String,
+        published: { type: Boolean, default: false },
     },
     { timestamps: true }
 );

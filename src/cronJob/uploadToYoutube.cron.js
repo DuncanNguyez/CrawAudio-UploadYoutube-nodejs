@@ -7,7 +7,7 @@ export default async () => {
     const stories =
         (await Stories.findOne({ status: 'uploading' }).lean()) ||
         (await Stories.findOne({ status: 'pending' }).lean());
-    const screens = await Screens.find().lean();
+    const screens = await Screens.find({ published: true }).lean();
     const spinner = ora();
     for (const screen of screens) {
         const projectId = screen.projectId;
