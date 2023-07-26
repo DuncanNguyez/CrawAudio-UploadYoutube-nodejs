@@ -55,6 +55,7 @@ export default async (pageUrl) => {
 
         return true;
     } catch (error) {
+        console.error(error.message);
         await ResultLogs.create({
             workspace: 'crawInfo',
             info: {

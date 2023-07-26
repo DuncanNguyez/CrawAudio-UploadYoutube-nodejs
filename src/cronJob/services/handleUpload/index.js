@@ -140,7 +140,7 @@ export default async (stories, auth, projectId) => {
         ]);
         return true;
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         await ResultLogs.create({
             info: {
                 status: false,
