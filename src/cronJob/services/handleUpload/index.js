@@ -38,7 +38,7 @@ export default async (stories, auth, projectId) => {
 
     const author = await Authors.findOne({ id: authorId }).lean();
     const listItemsSorted = sortBy(listItems, 'episode');
-    const item = find(listItemsSorted, (i) => !i.status);
+    const item = find(listItemsSorted, (i) => i.status === 'pending');
 
     if (!item) {
         spinner.succeed(`${name} play list uploaded`);
@@ -53,6 +53,11 @@ export default async (stories, auth, projectId) => {
 
         return true;
     }
+
+    await Stories.updateOne(
+        { id, 'listItems.episode': item.episode },
+        { $set: { 'listItems.$.status': 'uploading' } }
+    );
 
     const itemName = `${id}_episode_${item.episode}`;
     const imagePath = `${process.cwd()}/files/images/${id}.png`;
@@ -110,7 +115,7 @@ export default async (stories, auth, projectId) => {
             { id, 'listItems.episode': item.episode },
             {
                 $set: {
-                    'listItems.$.status': true,
+                    'listItems.$.status': 'uploaded',
                     'listItems.$.youtubeId': videoId,
                     'listItems.$.youtubeUrl': `https://youtu.be/${videoId}`,
                     status: 'uploading',
@@ -140,6 +145,11 @@ export default async (stories, auth, projectId) => {
         ]);
         return true;
     } catch (error) {
+        await Stories.updateOne(
+            { id, 'listItems.episode': item.episode },
+            { $set: { 'listItems.$.status': 'pending' } }
+        );
+
         console.error(error.message);
         await ResultLogs.create({
             info: {
