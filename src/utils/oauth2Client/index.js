@@ -24,7 +24,6 @@ export default async ({ screenApp, scopes }) => {
         oauth2Client.setCredentials(
             transformVariableType(credentials, 'sneck_case')
         );
-
         // Access token has expired, refresh it
         if (credentials.expiryDate < Date.now()) {
             await oauth2Client.refreshAccessToken();
@@ -32,7 +31,7 @@ export default async ({ screenApp, scopes }) => {
             await Credentials.findOneAndUpdate(
                 { projectId },
                 {
-                    set: transformVariableType(newCredentials, 'cameCase'),
+                    $set: transformVariableType(newCredentials, 'cameCase'),
                 }
             );
         }
@@ -47,7 +46,6 @@ export default async ({ screenApp, scopes }) => {
         const { tokens: credentials } = await oauth2Client.getToken(code);
         oauth2Client.setCredentials(credentials);
         // console.log({ credentials });
-        console.log(transformVariableType(credentials, 'cameCase'));
         await Credentials.findOneAndUpdate(
             { projectId },
             {
