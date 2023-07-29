@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 });
 
 const authorId = await new Promise((resolve) =>
-    rl.question('authorId', resolve)
+    rl.question('authorId: ', resolve)
 );
 const name = await new Promise((resolve) => rl.question('authorName', resolve));
 
