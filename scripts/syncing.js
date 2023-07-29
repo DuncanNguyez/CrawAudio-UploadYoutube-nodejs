@@ -12,6 +12,6 @@ const rl = readline.createInterface({
 });
 
 const id = await new Promise((resolve) => rl.question('storyId: ', resolve));
-const story = await Stories.findOne({ id });
+const story = await Stories.findOne({ id }).lean();
 await syncStory(story);
 process.exit();

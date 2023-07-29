@@ -25,7 +25,7 @@ export default async (story) => {
         if (!list) {
             throw Error('playlist not found');
         }
-        const playlistItems = getAllPlaylistItems(auth, list.id);
+        const playlistItems = await getAllPlaylistItems(auth, list.id);
 
         const listItemsUpdated = map(playlistItems, (item) => {
             const youtubeId = item.contentDetails.videoId;
@@ -41,6 +41,7 @@ export default async (story) => {
                 ? { ...item, ...listItemsUpdated[index] }
                 : item
         );
+        console.log({ newListItems });
         await Stories.updateOne(
             { id },
             {

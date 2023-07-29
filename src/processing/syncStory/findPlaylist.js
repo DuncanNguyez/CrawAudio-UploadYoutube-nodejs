@@ -1,4 +1,8 @@
+import lodash from 'lodash';
+
 import { getPlaylist } from '../../modules/uploadOnYoutube/index.js';
+
+const { find } = lodash;
 
 export default async (auth, title) => {
     let pageToken = '';
