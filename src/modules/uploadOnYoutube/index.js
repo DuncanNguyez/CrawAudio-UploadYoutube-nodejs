@@ -5,6 +5,8 @@ import insertPlaylist from './insertPlaylist.js';
 import insertPlaylistItem from './insertPlaylistItem.js';
 import insertVideo from './insertVideo.js';
 import getAuth from './getAuth.js';
+import getPlaylist from './getPlaylist.js';
+import getPlaylistItems from './getPlaylistItems.js';
 
 export {
     insertPlaylist,
@@ -14,4 +16,6 @@ export {
     getChannelSection,
     updateChannelSection,
     getAuth,
+    getPlaylist,
+    getPlaylistItems,
 };
