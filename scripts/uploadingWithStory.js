@@ -5,7 +5,6 @@ import { handleUpload } from '../src/cronJob/services/index.js';
 import { Screens, Stories } from '../src/models/index.js';
 import { connectDB } from '../src/utils/index.js';
 import ora from 'ora';
-import { getAuth } from '../src/modules/uploadOnYoutube/index.js';
 
 await connectDB();
 const rl = readline.createInterface({
@@ -18,13 +17,14 @@ const check = await Stories.findOne({ id }).lean();
 if (check) {
     const job = async () => {
         const stories = await Stories.findOne({ id }).lean();
-        const screens = await Screens.find({ published: true }).lean();
+        const screens = await Screens.find({ published: true })
+            .lean()
+            .sort({ createdAt: -1 });
         const spinner = ora();
         for (const screen of screens) {
             const projectId = screen.projectId;
             spinner.start(`Uploading by ${projectId}`);
-            const auth = await getAuth(screen);
-            const status = await handleUpload(stories, auth, projectId);
+            const status = await handleUpload(stories, screen, projectId);
             if (status) {
                 spinner.succeed(`Uploaded by ${projectId}`);
                 return;

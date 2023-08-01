@@ -8,12 +8,13 @@ import updatePlaylist from './updatePlaylist.js';
 import updateSection from './updateSection.js';
 import getDurations from '../../../utils/getDurations.js';
 import clearFolder from '../../../utils/clearFolder.js';
+import { getAuth } from '../../../modules/uploadOnYoutube/index.js';
 
 const { sortBy, find } = lodash;
 
 /**
  * @param {stories} stories
- * @param {OAuth2Client} auth
+ * @param {Screens} screen
  * @param {Screens.projectId} projectId
  * @return {Promise<Boolean>} status handle uploading
  * @description
@@ -21,7 +22,7 @@ const { sortBy, find } = lodash;
  * - push the video into playlist
  * - push the playlist into channel section
  */
-export default async (stories, auth, projectId) => {
+export default async (stories, screen, projectId) => {
     const startTime = process.hrtime();
     const {
         id,
@@ -66,6 +67,8 @@ export default async (stories, auth, projectId) => {
 
     try {
         console.time('prepareVideo');
+        const auth = await getAuth(screen);
+
         await prepareVideo({
             audioPath,
             imagePath,

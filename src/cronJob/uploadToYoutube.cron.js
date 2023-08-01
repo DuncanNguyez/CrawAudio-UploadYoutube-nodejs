@@ -1,6 +1,6 @@
 import ora from 'ora';
+
 import { Screens, Stories } from '../models/index.js';
-import { getAuth } from '../modules/uploadOnYoutube/index.js';
 import { handleUpload } from './services/index.js';
 
 export default async () => {
@@ -13,8 +13,7 @@ export default async () => {
         const projectId = screen.projectId;
         spinner.clear();
         spinner.start(`Uploading by ${projectId}`);
-        const auth = await getAuth(screen);
-        const status = await handleUpload(stories, auth, projectId);
+        const status = await handleUpload(stories, screen, projectId);
         if (status) {
             spinner.succeed(`Uploaded by ${projectId}`);
             return;
