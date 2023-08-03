@@ -47,6 +47,7 @@ export default async ({ author, playlistId, auth, storyName }) => {
             auth,
             channelSectionId: author.youtubeId,
             playlistIds: [...playlistIds, playlistId],
+            author: author.name,
         });
         spinner.succeed(`Updated ${author.name} channel section`);
         return author.youtubeId;
