@@ -104,13 +104,15 @@ export default async (stories, screen, projectId) => {
             youtubeId: { $ne: null },
         }).count();
 
-        if (channelSectionTotal < 10) {
-            const channelSectionId = await updateSection({
-                author,
-                playlistId,
-                auth,
-                storyName: name,
-            });
+        const channelSectionId = await updateSection({
+            author,
+            playlistId,
+            auth,
+            storyName: name,
+            channelSectionTotal,
+        });
+
+        if (channelSectionId) {
             await Authors.updateOne(
                 { id: author.id },
                 {

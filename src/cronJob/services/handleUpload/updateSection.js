@@ -9,9 +9,18 @@ import {
 
 const { includes } = lodash;
 
-export default async ({ author, playlistId, auth, storyName }) => {
+export default async ({
+    author,
+    playlistId,
+    auth,
+    storyName,
+    channelSectionTotal,
+}) => {
     const spinner = ora();
     if (!author.youtubeId) {
+        if (channelSectionTotal >= 10) {
+            return null;
+        }
         spinner.start('Create channel section');
         const {
             data: { id: channelSectionId },
