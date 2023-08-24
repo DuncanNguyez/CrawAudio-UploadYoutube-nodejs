@@ -21,7 +21,7 @@ const crawInfoDefaultJob = new CronJob(
 crawInfoDefaultJob.start();
 
 const crawInfoPageJob = new CronJob(
-    '0 0 * * * *',
+    '0 0 */3 * * *',
     crawInfoPageCron,
     null,
     false,
