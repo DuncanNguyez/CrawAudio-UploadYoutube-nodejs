@@ -4,9 +4,18 @@ import { Screens, Stories } from '../models/index.js';
 import { handleUpload } from './services/index.js';
 
 export default async () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const stories =
-        (await Stories.findOne({ status: 'uploading' }).lean()) ||
-        (await Stories.findOne({ status: 'pending' }).lean());
+        (await Stories.findOne({
+            status: 'uploading',
+            updatedAt: { $lt: today },
+        }).lean()) ||
+        (await Stories.findOne({
+            status: 'pending',
+            updatedAt: { $lt: today },
+        }).lean());
     const screens = await Screens.find({ published: true }).lean();
     const spinner = ora();
     for (const screen of screens) {
