@@ -100,20 +100,26 @@ export default async (stories, screen, projectId) => {
             position: item.episode - 1,
         });
 
-        const channelSectionId = await updateSection({
-            author,
-            playlistId,
-            auth,
-            storyName: name,
-        });
+        const channelSectionTotal = await Authors.find({
+            youtubeId: { $ne: null },
+        }).count();
 
-        await Authors.updateOne(
-            { id: author.id },
-            {
-                $set: { youtubeId: channelSectionId },
-                $addToSet: { playlistIds: playlistId },
-            }
-        );
+        if (channelSectionTotal < 10) {
+            const channelSectionId = await updateSection({
+                author,
+                playlistId,
+                auth,
+                storyName: name,
+            });
+            await Authors.updateOne(
+                { id: author.id },
+                {
+                    $set: { youtubeId: channelSectionId },
+                    $addToSet: { playlistIds: playlistId },
+                }
+            );
+        }
+
         await Stories.updateOne(
             { id, 'listItems.episode': item.episode },
             {
