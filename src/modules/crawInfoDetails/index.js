@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 import { JSDOM } from 'jsdom';
 
-const { map, includes, compact } = lodash;
+const { map, includes, compact, truncate } = lodash;
 
 export default async ({ pageUrl }) => {
     const storiesCompleted = await getStoriesCompleted(pageUrl);
@@ -96,12 +96,20 @@ const crawlStory = async (item) => {
 
     const totalEpisode = items.length;
 
+    // refactor the descriptions to match the api
+    const descriptionsRefactored = truncate(
+        descriptionsStory.replace(/[&'"><\\]/g, '-'),
+        {
+            length: 4999,
+        }
+    );
+
     const result = {
         id: storyId,
         url: singleStoryUrl,
         title,
         thumbnail,
-        descriptions: descriptionsStory,
+        descriptions: descriptionsRefactored,
         author,
         totalEpisode,
         genres,
