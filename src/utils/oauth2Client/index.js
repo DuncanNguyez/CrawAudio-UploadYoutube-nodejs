@@ -24,8 +24,13 @@ export default async ({ screenApp, scopes }) => {
         oauth2Client.setCredentials(
             transformVariableType(credentials, 'sneck_case')
         );
+
+        if (!credentials.expiryDate < Date.now()) {
+            return oauth2Client;
+        }
+
         // Access token has expired, refresh it
-        if (credentials.expiryDate < Date.now()) {
+        try {
             await oauth2Client.refreshAccessToken();
             const newCredentials = oauth2Client.credentials;
             await Credentials.findOneAndUpdate(
@@ -34,26 +39,32 @@ export default async ({ screenApp, scopes }) => {
                     $set: transformVariableType(newCredentials, 'cameCase'),
                 }
             );
+            return oauth2Client;
+        } catch (error) {
+            console.error('Refresh token error', error.message);
         }
-    } else {
-        const authUrl = oauth2Client.generateAuthUrl({
-            access_type: 'offline',
-            scope: scopes,
-        });
-        // console.log({ authUrl });
-        const code = await getCodeFromBrowser({ url: authUrl, redirectUrl });
-        console.log({ code });
-        const { tokens: credentials } = await oauth2Client.getToken(code);
-        oauth2Client.setCredentials(credentials);
-        // console.log({ credentials });
-        await Credentials.findOneAndUpdate(
-            { projectId },
-            {
-                $set: transformVariableType(credentials, 'cameCase'),
-            },
-            { upsert: true }
-        );
     }
+
+    const authUrl = oauth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: scopes,
+    });
+    // console.log({ authUrl });
+    const code = await getCodeFromBrowser({ url: authUrl, redirectUrl });
+    console.log({ code });
+    const { tokens: credentialsFromBrowser } = await oauth2Client.getToken(
+        code
+    );
+    oauth2Client.setCredentials(credentialsFromBrowser);
+    // console.log({ credentials });
+    await Credentials.findOneAndUpdate(
+        { projectId },
+        {
+            $set: transformVariableType(credentialsFromBrowser, 'cameCase'),
+        },
+        { upsert: true }
+    );
+
     return oauth2Client;
 };
 
@@ -71,7 +82,7 @@ const getCodeFromBrowser = async ({ url, redirectUrl }) => {
         });
         setTimeout(() => {
             reject(new Error(`Not try url matched, time out: 20s`));
-        }, 180000);
+        }, 20000);
     });
 
     // login gg account
@@ -103,7 +114,7 @@ const getCodeFromBrowser = async ({ url, redirectUrl }) => {
         await input.click();
         await (await page.$$('button')).at(2).click();
     } catch (error) {
-        console.error('getCodeFromBrowser Error');
+        console.error('getCodeFromBrowser Error', error);
     }
 
     const code = (await lastUrlPromise)
