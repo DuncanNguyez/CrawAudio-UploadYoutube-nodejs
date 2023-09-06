@@ -1,7 +1,12 @@
 import lodash from 'lodash';
 import ora from 'ora';
 
-import { Stories, Authors, ResultLogs } from '../../../models/index.js';
+import {
+    Stories,
+    Authors,
+    ResultLogs,
+    Screens,
+} from '../../../models/index.js';
 import prepareVideo from './prepareVideo.js';
 import uploadVideo from './uploadVideo.js';
 import updatePlaylist from './updatePlaylist.js';
@@ -11,6 +16,8 @@ import clearFolder from '../../../utils/clearFolder.js';
 import { getAuth } from '../../../modules/uploadOnYoutube/index.js';
 
 const { sortBy, find } = lodash;
+const exceededQuotaMessage =
+    'The request cannot be completed because you have exceeded your <a href="/youtube/v3/getting-started#quota">quota</a>.';
 
 /**
  * @param {stories} stories
@@ -162,6 +169,13 @@ export default async (stories, screen, projectId) => {
         );
 
         console.error(error.message);
+        if (error.message === exceededQuotaMessage) {
+            await Screens.updateOne(
+                { projectId: screen.projectId },
+                { $set: { quotaToday: 'exceeded' } }
+            );
+        }
+
         await ResultLogs.create({
             info: {
                 status: false,

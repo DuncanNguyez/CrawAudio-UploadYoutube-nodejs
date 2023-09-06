@@ -7,6 +7,12 @@ const screenSchema = new Schema(
         clientSecret: String,
         redirectUrl: String,
         published: { type: Boolean, default: false },
+        email: String,
+        quotaToday: {
+            type: String,
+            enum: ['available', 'exceeded'],
+            default: 'available',
+        },
     },
     { timestamps: true }
 );

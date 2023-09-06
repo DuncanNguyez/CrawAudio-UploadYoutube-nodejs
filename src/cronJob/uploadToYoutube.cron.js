@@ -31,7 +31,10 @@ export default async () => {
         }
     );
 
-    const screens = await Screens.find({ published: true }).lean();
+    const screens = await Screens.find({
+        published: true,
+        quotaToday: 'available',
+    }).lean();
     const spinner = ora();
     for (const screen of screens) {
         const projectId = screen.projectId;

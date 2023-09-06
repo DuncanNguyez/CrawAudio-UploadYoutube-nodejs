@@ -22,6 +22,7 @@ const clientSecret = await new Promise((resolve) =>
 const redirectUrl = await new Promise((resolve) =>
     rl.question('redirectUrl: ', resolve)
 );
+const email = await new Promise((resolve) => rl.question('email: ', resolve));
 
 const screen = await Screens.findOneAndUpdate(
     { projectId },
@@ -31,6 +32,7 @@ const screen = await Screens.findOneAndUpdate(
             projectId,
             clientSecret,
             redirectUrl,
+            email,
         },
     },
     { upsert: true, lean: true, new: true }

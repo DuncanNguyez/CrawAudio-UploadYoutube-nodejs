@@ -4,6 +4,7 @@ import {
     crawInfoDefaultCron,
     crawInfoPageCron,
     uploadToYoutubeCron,
+    refreshYoutubeApiQuotaCron,
 } from './src/cronJob/index.js';
 import { connectDB } from './src/utils/index.js';
 
@@ -30,6 +31,18 @@ const crawInfoPageJob = new CronJob(
     true
 );
 crawInfoPageJob.start();
+
+const refreshYoutubeApiQuotaJob = new CronJob(
+    '0 0 0 * * *',
+    refreshYoutubeApiQuotaCron,
+    null,
+    false,
+    null,
+    null,
+    true
+);
+
+refreshYoutubeApiQuotaJob.start();
 
 const uploadToYoutubeJob = new CronJob(
     '0 18 * * * *',
