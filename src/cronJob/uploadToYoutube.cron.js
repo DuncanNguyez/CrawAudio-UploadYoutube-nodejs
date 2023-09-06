@@ -7,6 +7,7 @@ import { handleUpload } from './services/index.js';
 const { truncate } = lodash;
 
 export default async () => {
+    const minTotalEpisode = 20;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -14,10 +15,12 @@ export default async () => {
         (await Stories.findOne({
             status: 'uploading',
             updatedAt: { $lt: today },
+            totalEpisode: { $gte: minTotalEpisode },
         }).lean()) ||
         (await Stories.findOne({
             status: 'pending',
             updatedAt: { $lt: today },
+            totalEpisode: { $gte: minTotalEpisode },
         }).lean());
 
     // refactor the descriptions to match the api
