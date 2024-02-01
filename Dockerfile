@@ -1,5 +1,5 @@
 FROM node:20.5.0
-FROM linuxserver/ffmpeg:version-6.0-cli
 WORKDIR .
+COPY --from=mwader/static-ffmpeg:6.0-1 /ffmpeg /usr/local/bin/
 COPY . .
 ENTRYPOINT ["npm","run","prod"]
